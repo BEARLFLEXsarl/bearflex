@@ -1,9 +1,45 @@
 # Ignore environment variables file
 .env
+.env.local
+.env.production
+
+# Ignore database files
+*.sqlite3
+db.sqlite3
 
 # Ignore Python cache files
 __pycache__/
 *.py[cod]
+*.pyo
+*.pyd
+*.so
 
 # Ignore virtual environment folder
 env/
+venv/
+.venv/
+
+# Ignore Django specific files
+*.log
+django.log
+
+# Ignore media files (uploads)
+media/
+
+# Ignore collected static files
+staticfiles/
+static_collected/
+
+# Ignore IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Ignore OS specific files
+.DS_Store
+Thumbs.db
+
+# Ignore backup files
+*.bak
+*.backup
