@@ -194,35 +194,35 @@
       <div class="hero-carousel w-full h-full">
         <!-- Image 1: Paliers industriels -->
         <div class="carousel-slide active">
-          <img src="https://images.unsplash.com/photo-1621905251189-08b45d6a269e?auto=format&fit=crop&w=2000&q=80" 
+          <img src="{% static 'img/unsplash1.jpg' %}" 
                alt="Paliers industriels et supports mécaniques de précision" 
                class="w-full h-full object-cover opacity-70">
         </div>
         
         <!-- Image 2: Roulements à billes industriels -->
         <div class="carousel-slide">
-          <img src="https://images.unsplash.com/photo-1537462715879-360eeb61a0ad?auto=format&fit=crop&w=2000&q=80" 
+          <img src="{% static 'img/unsplash2.jpg' %}" 
                alt="Roulements à billes industriels de haute précision" 
                class="w-full h-full object-cover opacity-70">
         </div>
         
         <!-- Image 3: Machines de forage industriel -->
         <div class="carousel-slide">
-          <img src="https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=2000&q=80" 
+          <img src="{% static 'img/unsplash3.jpg' %}" 
                alt="Équipements de forage et machines industrielles" 
                class="w-full h-full object-cover opacity-70">
         </div>
         
         <!-- Image 4: Accessoires et pièces détachées -->
         <div class="carousel-slide">
-          <img src="https://images.unsplash.com/photo-1581093458791-9f3c3250a33a?auto=format&fit=crop&w=2000&q=80" 
+          <img src="{% static 'img/unsplash4.jpg' %}" 
                alt="Composants et accessoires industriels de précision" 
                class="w-full h-full object-cover opacity-70">
         </div>
         
         <!-- Image 5: Distribution et stockage -->
         <div class="carousel-slide">
-          <img src="https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=80" 
+          <img src="{% static 'img/unsplash5.jpg' %}" 
                alt="Entrepôt moderne et distribution d'équipements industriels" 
                class="w-full h-full object-cover opacity-70">
         </div>
@@ -1561,12 +1561,14 @@
             }
         });  
         
-        // JavaScript pour le carrousel Hero
+        // JavaScript pour le carrousel Hero avec démarrage automatique amélioré
         document.addEventListener('DOMContentLoaded', function() {
             const slides = document.querySelectorAll('.carousel-slide');
             const indicators = document.querySelectorAll('.carousel-indicator');
             let currentSlide = 0;
             let slideInterval;
+            
+            console.log('Carrousel initialisé avec', slides.length, 'slides'); // Debug
             
             function showSlide(index) {
                 // Masquer toutes les slides
@@ -1574,8 +1576,14 @@
                 indicators.forEach(indicator => indicator.classList.remove('active'));
                 
                 // Afficher la slide courante
-                slides[index].classList.add('active');
-                indicators[index].classList.add('active');
+                if (slides[index]) {
+                    slides[index].classList.add('active');
+                }
+                if (indicators[index]) {
+                    indicators[index].classList.add('active');
+                }
+                
+                console.log('Slide active:', index); // Debug
             }
             
             function nextSlide() {
@@ -1584,11 +1592,18 @@
             }
             
             function startCarousel() {
-                slideInterval = setInterval(nextSlide, 5000); // Change toutes les 5 secondes
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                }
+                slideInterval = setInterval(nextSlide, 4000); // Change toutes les 4 secondes
+                console.log('Carrousel démarré automatiquement'); // Debug
             }
             
             function stopCarousel() {
-                clearInterval(slideInterval);
+                if (slideInterval) {
+                    clearInterval(slideInterval);
+                    console.log('Carrousel arrêté'); // Debug
+                }
             }
             
             // Event listeners pour les indicateurs
@@ -1602,12 +1617,20 @@
             });
             
             // Pause le carrousel au survol et reprend quand on sort
-            const heroSection = document.querySelector('.hero-carousel').closest('section');
-            heroSection.addEventListener('mouseenter', stopCarousel);
-            heroSection.addEventListener('mouseleave', startCarousel);
+            const heroSection = document.querySelector('.hero-carousel');
+            if (heroSection) {
+                const parentSection = heroSection.closest('section');
+                if (parentSection) {
+                    parentSection.addEventListener('mouseenter', stopCarousel);
+                    parentSection.addEventListener('mouseleave', startCarousel);
+                }
+            }
             
-            // Démarre le carrousel
-            startCarousel();
+            // Démarre le carrousel immédiatement après chargement
+            setTimeout(() => {
+                showSlide(0); // S'assurer que la première slide est active
+                startCarousel();
+            }, 500); // Délai de 500ms pour s'assurer que tout est chargé
         });
         </script>
       </body>

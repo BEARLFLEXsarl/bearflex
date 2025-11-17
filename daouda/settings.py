@@ -24,9 +24,9 @@ TEMPLATES_DIR = os.path.join(BASE_DIR, 'templates')
 SECRET_KEY = 'django-insecure-rpwd!m2bjk%1+av8^ps)t09dg(c5x(xh-ulg!qdyu+qrwp@kbu'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = False  # True pour développement local, False pour production
 
-ALLOWED_HOSTS = ['mirocbf.com', 'www.mirocbf.com']
+ALLOWED_HOSTS = ['mirocbf.com', 'www.mirocbf.com', 'bearflex.pythonanywhere.com']
 
 
 # Application definition
